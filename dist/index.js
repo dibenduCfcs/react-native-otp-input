@@ -131,8 +131,11 @@ export default class OTPInputView extends Component {
             const { selectedIndex, digits } = this.state;
             const { clearInputs, placeholderCharacter, placeholderTextColor } = this.props;
             const { color: defaultPlaceholderTextColor } = { ...defaultTextFieldStyle, ...codeInputFieldStyle };
+            const extraStyle ={
+                borderColor: digits[index] === undefined ? codeInputHighlightStyle.borderColor1:codeInputHighlightStyle.borderColor2
+            }
             return (<View pointerEvents="none" key={index + "view"} testID="inputSlotView">
-                <TextInput testID="textInput" underlineColorAndroid='rgba(0,0,0,0)' style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]} ref={ref => { this.fields[index] = ref; }} onChangeText={text => {
+                <TextInput testID="textInput" underlineColorAndroid='rgba(0,0,0,0)' style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, extraStyle] : [defaultTextFieldStyle, codeInputFieldStyle,extraStyle]} ref={ref => { this.fields[index] = ref; }} onChangeText={text => {
                 this.handleChangeText(index, text);
             }} onKeyPress={({ nativeEvent: { key } }) => { this.handleKeyPressTextInput(index, key); }} value={!clearInputs ? digits[index] : ""} keyboardAppearance={keyboardAppearance} keyboardType={keyboardType} textContentType={isAutoFillSupported ? "oneTimeCode" : "none"} key={index} selectionColor={selectionColor} secureTextEntry={secureTextEntry} editable={editable} placeholder={placeholderCharacter} placeholderTextColor={placeholderTextColor || defaultPlaceholderTextColor}/>
             </View>);
