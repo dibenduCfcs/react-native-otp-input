@@ -32,7 +32,8 @@ export default class OTPInputView extends Component {
         };
         this.notifyCodeChanged = () => {
             const { digits } = this.state;
-            const code = digits.join("");
+            let code = new Array(this.props.pinCount).fill("");
+            code = code.map((val,index)=>digits[index]??val);
             const { onCodeChanged } = this.props;
             if (onCodeChanged) {
                 onCodeChanged(code);
